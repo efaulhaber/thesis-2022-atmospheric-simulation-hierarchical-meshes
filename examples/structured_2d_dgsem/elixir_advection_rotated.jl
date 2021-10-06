@@ -1,3 +1,8 @@
+# This elixir transforms the setup of elixir_advection_basic to a rotated square.
+# The nodal values of the initial condition and the exact solution are the same as
+# in elixir_advection_basic. 
+# However, on this rotated mesh, the metric terms are non-trivial.
+# The same errors as with elixir_advection_basic are expected (except for rounding errors).
 
 using OrdinaryDiffEq
 using Trixi
@@ -50,7 +55,7 @@ sin_ = initial_condition.sin_alpha
 cos_ = initial_condition.cos_alpha
 T = [cos_ -sin_; sin_ cos_]
 
-advection_velocity = Tuple(T * [1.0, 1.0])
+advection_velocity = Tuple(T * [0.2, -0.7])
 equations = LinearScalarAdvectionEquation2D(advection_velocity)
 
 # Create DG solver with polynomial degree = 3 and (local) Lax-Friedrichs/Rusanov flux as surface flux

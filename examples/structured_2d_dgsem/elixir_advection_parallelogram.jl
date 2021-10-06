@@ -1,3 +1,8 @@
+# This elixir transforms the setup of elixir_advection_basic to a parallelogram.
+# The nodal values of the initial condition and the exact solution are the same as
+# in elixir_advection_basic. 
+# However, on this non-rectangular mesh, the metric terms are non-trivial.
+# The same errors as with elixir_advection_basic are expected.
 
 using OrdinaryDiffEq
 using Trixi
@@ -25,7 +30,8 @@ end
 ###############################################################################
 # semidiscretization of the linear advection equation
 
-advection_velocity = (2.0, 1.0)
+# Transformed advection_velocity = (0.2, -0.7) by transformation mapping
+advection_velocity = (-0.5, -0.7)
 equations = LinearScalarAdvectionEquation2D(advection_velocity)
 
 # Create DG solver with polynomial degree = 3 and (local) Lax-Friedrichs/Rusanov flux as surface flux
