@@ -51,8 +51,7 @@ mesh_file = joinpath(@__DIR__, "cube_unstructured_1.inp")
 
 # Mesh polydeg of 2 (half the solver polydeg) to ensure FSP (see above).
 mesh = P4estMesh{3}(mesh_file, polydeg=2,
-                    mapping=mapping,
-                    initial_refinement_level=0)
+                    mapping=mapping)
 
 # Refine bottom left quadrant of each tree to level 2
 function refine_fn(p8est, which_tree, quadrant)
@@ -71,12 +70,13 @@ refine_fn_c = @cfunction(refine_fn, Cint, (Ptr{Trixi.p8est_t}, Ptr{Trixi.p4est_t
 Trixi.refine_p4est!(mesh.p4est, true, refine_fn_c, C_NULL)
 Trixi.balance!(mesh)
 
-# For convergence tests:
-# Refine everything again according to `initial_refinement_level`
-initial_refinement_level = 0
+# Refine everything again for convergence tests
 refine_fn2(p8est, which_tree, quadrant) = Cint(1)
 refine_fn_c2 = @cfunction(refine_fn2, Cint, (Ptr{Trixi.p8est_t}, Ptr{Trixi.p4est_topidx_t}, Ptr{Trixi.p8est_quadrant_t}))
 
+# Abuse the variable `initial_refinement_level` for this because this will be increased
+# during convergence tests
+initial_refinement_level = 0
 for i in 1:initial_refinement_level
   Trixi.refine_p4est!(mesh.p4est, false, refine_fn_c2, C_NULL)
 end

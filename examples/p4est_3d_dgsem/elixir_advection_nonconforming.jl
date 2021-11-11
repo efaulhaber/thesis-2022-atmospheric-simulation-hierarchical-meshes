@@ -20,12 +20,12 @@ trees_per_dimension = (1, 1, 1)
 # on a Cartesian mesh.
 # See https://doi.org/10.1007/s10915-018-00897-9, Section 6.
 mesh = P4estMesh(trees_per_dimension, polydeg=3,
-                 coordinates_min=coordinates_min, coordinates_max=coordinates_max,
-                 initial_refinement_level=3)
+                 coordinates_min=coordinates_min, coordinates_max=coordinates_max)
 
 # Refine bottom left quadrant of each tree to level 4
 function refine_fn(p8est, which_tree, quadrant)
-  if quadrant.x == 0 && quadrant.y == 0 && quadrant.z == 0 && quadrant.level < 4
+  if quadrant.level < 2 ||
+      (quadrant.x == 0 && quadrant.y == 0 && quadrant.z == 0 && quadrant.level < 4)
     # return true (refine)
     return Cint(1)
   else
@@ -38,6 +38,18 @@ end
 # The mesh will be rebalanced before the simulation starts
 refine_fn_c = @cfunction(refine_fn, Cint, (Ptr{Trixi.p8est_t}, Ptr{Trixi.p4est_topidx_t}, Ptr{Trixi.p8est_quadrant_t}))
 Trixi.refine_p4est!(mesh.p4est, true, refine_fn_c, C_NULL)
+Trixi.balance!(mesh)
+
+# Refine everything again for convergence tests
+refine_fn2(p8est, which_tree, quadrant) = Cint(1)
+refine_fn_c2 = @cfunction(refine_fn2, Cint, (Ptr{Trixi.p8est_t}, Ptr{Trixi.p4est_topidx_t}, Ptr{Trixi.p8est_quadrant_t}))
+
+# Abuse the variable `initial_refinement_level` for this because this will be increased
+# during convergence tests
+initial_refinement_level = 0
+for i in 1:initial_refinement_level
+  Trixi.refine_p4est!(mesh.p4est, false, refine_fn_c2, C_NULL)
+end
 
 # A semidiscretization collects data structures and functions for the spatial discretization
 semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition_convergence_test, solver)

@@ -35,8 +35,7 @@ mapping_flag = Trixi.transfinite_mapping(faces)
 mesh_file = joinpath(@__DIR__, "square_unstructured_2.inp")
 
 mesh = P4estMesh{2}(mesh_file, polydeg=3,
-                    mapping=mapping_flag,
-                    initial_refinement_level=3)
+                    mapping=mapping_flag)
 
 # Refine bottom left quadrant of each tree to level 4
 function refine_fn(p4est, which_tree, quadrant)
@@ -53,6 +52,18 @@ end
 # The mesh will be rebalanced before the simulation starts
 refine_fn_c = @cfunction(refine_fn, Cint, (Ptr{Trixi.p4est_t}, Ptr{Trixi.p4est_topidx_t}, Ptr{Trixi.p4est_quadrant_t}))
 Trixi.refine_p4est!(mesh.p4est, true, refine_fn_c, C_NULL)
+Trixi.balance!(mesh)
+
+# Refine everything again for convergence tests
+refine_fn2(p4est, which_tree, quadrant) = Cint(1)
+refine_fn_c2 = @cfunction(refine_fn2, Cint, (Ptr{Trixi.p4est_t}, Ptr{Trixi.p4est_topidx_t}, Ptr{Trixi.p4est_quadrant_t}))
+
+# Abuse the variable `initial_refinement_level` for this because this will be increased
+# during convergence tests
+initial_refinement_level = 0
+for i in 1:initial_refinement_level
+  Trixi.refine_p4est!(mesh.p4est, false, refine_fn_c2, C_NULL)
+end
 
 semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition, solver,
                                     source_terms=source_terms,
