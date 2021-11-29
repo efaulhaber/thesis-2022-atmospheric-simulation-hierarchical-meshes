@@ -43,12 +43,12 @@ function mapping(xi, eta, zeta)
   return SVector(x, y, z)
 end
 
-# Unstructured mesh with 68 cells of the cube domain [-1, 1]^3
-mesh_file = joinpath(@__DIR__, "cube_unstructured_1.inp")
+# Unstructured mesh with 48 cells of the cube domain [-1, 1]^3
+mesh_file = joinpath(@__DIR__, "cube_unstructured_2.inp")
 
 mesh = P4estMesh{3}(mesh_file, polydeg=3,
                     mapping=mapping,
-                    initial_refinement_level=1)
+                    initial_refinement_level=2)
 
 # A semidiscretization collects data structures and functions for the spatial discretization
 semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition, solver, boundary_conditions=boundary_conditions)
