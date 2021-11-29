@@ -14,7 +14,7 @@ solver = DGSEM(polydeg=3, surface_flux=flux_lax_friedrichs)
 coordinates_min = (-1.0, -1.0) # minimum coordinates (min(x), min(y))
 coordinates_max = ( 1.0,  1.0) # maximum coordinates (max(x), max(y))
 
-function mapping(eta_, xi_)
+function mapping(xi_, eta_)
   # Transform input variables between -1 and 1 onto [0,3]
   xi = 1.5 * xi_ + 1.5
   eta = 1.5 * eta_ + 1.5
