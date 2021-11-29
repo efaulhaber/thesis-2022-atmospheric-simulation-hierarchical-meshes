@@ -96,8 +96,7 @@ coordinates_max = ( 5.0,  5.0)
 trees_per_dimension = (1, 1)
 
 mesh = P4estMesh(trees_per_dimension, polydeg=3,
-                 coordinates_min=coordinates_min, coordinates_max=coordinates_max,
-                 initial_refinement_level=4)
+                 coordinates_min=coordinates_min, coordinates_max=coordinates_max)
 
 
 semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition, solver)
@@ -122,10 +121,13 @@ save_solution = SaveSolutionCallback(interval=100,
                                      save_final_solution=true,
                                      solution_variables=cons2prim)
 
+# Abuse the variable `initial_refinement_level` for this because this will be increased
+# during convergence tests
+initial_refinement_level=4
 amr_controller = ControllerThreeLevel(semi, TrixiExtension.IndicatorSolutionIndependent(semi),
-                                      base_level=4,
-                                      med_level=5, med_threshold=0.1,
-                                      max_level=6, max_threshold=0.6)
+                                      base_level=initial_refinement_level,
+                                      med_level=initial_refinement_level+1, med_threshold=0.1,
+                                      max_level=initial_refinement_level+2, max_threshold=0.6)
 
 amr_callback = AMRCallback(semi, amr_controller,
                            interval=5,
