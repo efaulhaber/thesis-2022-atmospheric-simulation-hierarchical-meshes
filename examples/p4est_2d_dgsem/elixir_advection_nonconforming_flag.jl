@@ -19,7 +19,7 @@ f2(s) = SVector( 1.0, s + 1.0)
 f3(s) = SVector(s, -1.0 + sin(0.5 * pi * s))
 f4(s) = SVector(s,  1.0 + sin(0.5 * pi * s))
 
-# Create P4estMesh with 3 x 2 trees and 6 x 4 elements,
+# Create P4estMesh with 3 x 2 trees,
 # approximate the geometry with a smaller polydeg for testing.
 cells_per_dimension = (3, 2)
 mesh = P4estMesh(cells_per_dimension, polydeg=3,

@@ -18,7 +18,7 @@ coordinates_max = ( 1.0,  1.0) # maximum coordinates (max(x), max(y))
 
 cells_per_dimension = (8, 8)
 
-# Create curved mesh with 16 x 16 elements
+# Create curved mesh with 8 x 8 elements
 mesh = StructuredMesh(cells_per_dimension, coordinates_min, coordinates_max)
 
 # A semidiscretization collects data structures and functions for the spatial discretization

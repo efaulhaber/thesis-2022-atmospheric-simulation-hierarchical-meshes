@@ -30,7 +30,7 @@ end
 
 cells_per_dimension = (5, 5)
 
-# Create curved mesh with 16 x 16 elements
+# Create curved mesh with 5 x 5 elements
 mesh = StructuredMesh(cells_per_dimension, mapping)
 
 # A semidiscretization collects data structures and functions for the spatial discretization

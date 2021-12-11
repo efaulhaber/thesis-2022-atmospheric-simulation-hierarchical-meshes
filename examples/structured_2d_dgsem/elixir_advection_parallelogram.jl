@@ -1,6 +1,6 @@
 # This elixir transforms the setup of elixir_advection_basic to a parallelogram.
 # The nodal values of the initial condition and the exact solution are the same as
-# in elixir_advection_basic. 
+# in elixir_advection_basic.
 # However, on this non-rectangular mesh, the metric terms are non-trivial.
 # The same errors as with elixir_advection_basic are expected.
 
@@ -48,7 +48,7 @@ mapping(xi, eta) = SVector(xi + eta, eta)
 
 cells_per_dimension = (8, 8)
 
-# Create curved mesh with 16 x 16 elements, periodic in both dimensions
+# Create curved mesh with 8 x 8 elements, periodic in both dimensions
 mesh = StructuredMesh(cells_per_dimension, mapping; periodicity=(true, true))
 
 # A semidiscretization collects data structures and functions for the spatial discretization

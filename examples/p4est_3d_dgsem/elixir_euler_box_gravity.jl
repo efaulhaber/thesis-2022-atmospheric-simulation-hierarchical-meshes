@@ -161,7 +161,8 @@ solver = DGSEM(polydeg=3, surface_flux=surface_flux, volume_integral=VolumeInteg
 radius_earth = 6.371229e6
 circumference_earth = 2 * pi * radius_earth
 
-mesh = P4estMesh((4, 1, 4), polydeg=1,
+trees_per_dimension = (4, 1, 4)
+mesh = P4estMesh(trees_per_dimension, polydeg=1,
                  coordinates_min=(0.0, -1/64 * circumference_earth, radius_earth),
                  coordinates_max=(circumference_earth / 8, 1/64 * circumference_earth, radius_earth + 30000.0),
                  periodicity=(true, true, false), initial_refinement_level=0)

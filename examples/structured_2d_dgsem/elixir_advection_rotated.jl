@@ -1,6 +1,6 @@
 # This elixir transforms the setup of elixir_advection_basic to a rotated square.
 # The nodal values of the initial condition and the exact solution are the same as
-# in elixir_advection_basic. 
+# in elixir_advection_basic.
 # However, on this rotated mesh, the metric terms are non-trivial.
 # The same errors as with elixir_advection_basic are expected (except for rounding errors).
 
@@ -65,7 +65,7 @@ mapping(xi, eta) = T * SVector(xi, eta)
 
 cells_per_dimension = (8, 8)
 
-# Create curved mesh with 16 x 16 elements
+# Create curved mesh with 8 x 8 elements
 mesh = StructuredMesh(cells_per_dimension, mapping)
 
 # A semidiscretization collects data structures and functions for the spatial discretization
