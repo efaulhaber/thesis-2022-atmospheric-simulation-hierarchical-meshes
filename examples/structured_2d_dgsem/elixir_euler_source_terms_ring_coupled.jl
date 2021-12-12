@@ -114,7 +114,7 @@ semi = SemidiscretizationCoupled((semi1, semi2, semi3, semi4))
 ###############################################################################
 # ODE solvers, callbacks etc.
 
-tspan = (0.0, 1.0)
+tspan = (0.0, 2.0)
 ode = semidiscretize(semi, tspan)
 
 summary_callback = SummaryCallback()
