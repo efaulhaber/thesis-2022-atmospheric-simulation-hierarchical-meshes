@@ -61,7 +61,7 @@ semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition, solver, 
 ###############################################################################
 # ODE solvers, callbacks etc.
 
-tspan = (0.0, 8.0)
+tspan = (0.0, 4.0)
 ode = semidiscretize(semi, tspan)
 
 summary_callback = SummaryCallback()
@@ -82,8 +82,8 @@ save_solution = SaveSolutionCallback(interval=100,
 
 amr_controller = ControllerThreeLevel(semi, IndicatorMax(semi, variable=first),
                                       base_level=1,
-                                      med_level=2, med_threshold=0.1,
-                                      max_level=3, max_threshold=0.6)
+                                      med_level=2, med_threshold=0.05,
+                                      max_level=3, max_threshold=0.4)
 amr_callback = AMRCallback(semi, amr_controller,
                            interval=5,
                            adapt_initial_condition=true,
