@@ -9,8 +9,8 @@ using Trixi
 advection_velocity = (0.2, -0.7)
 equations = LinearScalarAdvectionEquation2D(advection_velocity)
 
-# Create DG solver with polynomial degree = 4 and (local) Lax-Friedrichs/Rusanov flux as surface flux
-solver = DGSEM(polydeg=4, surface_flux=flux_lax_friedrichs)
+# Create DG solver with polynomial degree = 3 and (local) Lax-Friedrichs/Rusanov flux as surface flux
+solver = DGSEM(polydeg=3, surface_flux=flux_lax_friedrichs)
 
 # Deformed rectangle that looks like a waving flag,
 # lower and upper faces are sinus curves, left and right are vertical lines.
@@ -61,8 +61,8 @@ semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition_convergen
 ###############################################################################
 # ODE solvers, callbacks etc.
 
-# Create ODE problem with time span from 0.0 to 0.2
-ode = semidiscretize(semi, (0.0, 0.2));
+# Create ODE problem with time span from 0.0 to 1.0
+ode = semidiscretize(semi, (0.0, 1.0));
 
 # At the beginning of the main loop, the SummaryCallback prints a summary of the simulation setup
 # and resets the timers
