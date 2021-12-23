@@ -5,7 +5,7 @@ using Trixi
 ###############################################################################
 # semidiscretization of the linear advection equation
 
-advection_velocity = (0.2, -0.7)
+advection_velocity = (1.0, 1.0)
 equations = LinearScalarAdvectionEquation2D(advection_velocity)
 
 initial_condition = initial_condition_gauss
@@ -46,7 +46,7 @@ semi = SemidiscretizationHyperbolic(mesh, equations, initial_condition, solver,
 ###############################################################################
 # ODE solvers, callbacks etc.
 
-tspan = (0.0, 10.0)
+tspan = (-3.0, 3.0)
 ode = semidiscretize(semi, tspan)
 
 summary_callback = SummaryCallback()
