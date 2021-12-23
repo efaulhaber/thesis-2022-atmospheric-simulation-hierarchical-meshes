@@ -37,9 +37,9 @@ mesh_file = joinpath(@__DIR__, "square_unstructured_2.inp")
 mesh = P4estMesh{2}(mesh_file, polydeg=3,
                     mapping=mapping_flag)
 
-# Refine bottom left quadrant of each tree to level 4
+# Refine bottom left quadrant of each tree to level 3
 function refine_fn(p4est, which_tree, quadrant)
-  if quadrant.x == 0 && quadrant.y == 0 && quadrant.level < 4
+  if quadrant.x == 0 && quadrant.y == 0 && quadrant.level < 3
     # return true (refine)
     return Cint(1)
   else
