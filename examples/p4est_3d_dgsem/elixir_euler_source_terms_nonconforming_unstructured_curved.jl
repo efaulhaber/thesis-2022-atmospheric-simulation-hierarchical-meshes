@@ -14,7 +14,7 @@ boundary_conditions = Dict(
   :all => boundary_condition
 )
 
-# Solver with polydeg=4 to ensure free stream preservation (FSP) on non-conforming meshes.
+# Solver with polydeg=6 to ensure free stream preservation (FSP) on non-conforming meshes.
 # The polydeg of the solver must be at least twice as big as the polydeg of the mesh.
 # See https://doi.org/10.1007/s10915-018-00897-9, Section 6.
 solver = DGSEM(polydeg=6, surface_flux=flux_hll,
@@ -49,7 +49,7 @@ end
 # Unstructured mesh with 48 cells of the cube domain [-1, 1]^3
 mesh_file = joinpath(@__DIR__, "cube_unstructured_2.inp")
 
-# Mesh polydeg of 2 (half the solver polydeg) to ensure FSP (see above).
+# Mesh polydeg of 3 (half the solver polydeg) to ensure FSP (see above).
 mesh = P4estMesh{3}(mesh_file, polydeg=3,
                     mapping=mapping)
 
