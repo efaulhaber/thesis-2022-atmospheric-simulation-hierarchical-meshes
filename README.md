@@ -1,5 +1,7 @@
 <!-- LTeX: language=en-US -->
-# Discontinuous Galerkin Methods for Atmospheric Simulations with p4est in Julia
+# Discontinuous Galerkin Methods for Atmospheric Simulations on Hierarchical Meshes in Julia
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
 
 This repository contains the code to reproduce the numerical results in my master's thesis.
 The presented code uses [Trixi.jl](https://github.com/trixi-framework/Trixi.jl),
