@@ -201,11 +201,21 @@ amr_callback = AMRCallback(semi, amr_controller,
                            adapt_initial_condition=true,
                            adapt_initial_condition_only_refine=true)
 
-callbacks = CallbackSet(summary_callback,
+# This variable can be changed by passing the keyword argument conforming=true
+# to trixi_include or convergence_test
+conforming=false
+if conforming
+  callbacks = CallbackSet(summary_callback,
+                          analysis_callback,
+                          save_solution,
+                          alive_callback)
+else
+  callbacks = CallbackSet(summary_callback,
                         analysis_callback,
                         amr_callback,
                         save_solution,
                         alive_callback)
+end
 
 
 ###############################################################################

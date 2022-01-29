@@ -76,11 +76,20 @@ amr_callback = AMRCallback(semi, amr_controller,
 
 stepsize_callback = StepsizeCallback(cfl=0.7)
 
-callbacks = CallbackSet(summary_callback,
-                        analysis_callback, alive_callback,
-                        save_restart, save_solution,
-                        amr_callback, stepsize_callback);
-
+# This variable can be changed by passing the keyword argument amr=false
+# to trixi_include or convergence_test
+amr = true
+if amr
+  callbacks = CallbackSet(summary_callback,
+                          analysis_callback, alive_callback,
+                          save_restart, save_solution,
+                          amr_callback, stepsize_callback);
+else
+  callbacks = CallbackSet(summary_callback,
+                          analysis_callback, alive_callback,
+                          save_restart, save_solution,
+                          stepsize_callback);
+end
 
 ###############################################################################
 # run the simulation
